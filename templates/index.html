@@ -1,11 +1,46 @@
-<h1>Homepage</h1>
+{% extends 'layouts.html' %}
 
-<form action="/new" method="POST">
-    <input type="text" name="fullname" placeholder="Write your fullname?">
-    <input type="email" name="email" placeholder="Write your email?">
-    <input type="tel" name="phone" placeholder="Write your phone?">
+{% block body %}
 
-    <button>Save</button>
+
+
+
+
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+
+
+
+<form action="/new" method="POST" class="card bg-primary text-light">
+
+
+    <div class="card-body p-4">
+        <div class="mb-3">
+
+            <input type="text" name="fullname" placeholder="Write your fullname">
+        </div>
+
+        <div class="mb-3">
+            <input type="email" name="email" placeholder="Write your email?">
+        </div>
+
+
+
+        <input type="tel" name="phone" placeholder="Write your phone?">
+
+        <button>Save</button>
+    </div>
+
 </form>
 
 <div>
@@ -14,8 +49,8 @@
     <div>
         <h5>{{contact.fullname}}</h5>
         <div>
-            <a href={{ url_for('contacts.update') }}>Update</a>
-            <a href={{ url_for('contacts.delete') }}>Delete</a>
+            <a href={{ url_for('contacts.update', id=contact.id) }}>Update</a>
+            <a href={{ url_for('contacts.delete', id=contact.id) }}>Delete</a>
         </div>
         <p>{{contact.email}}</p>
         <p>{{contact.phone}}</p>
@@ -23,3 +58,5 @@
 
     {% endfor %}
 </div>
+
+{% endblock %}
